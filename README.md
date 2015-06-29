@@ -28,8 +28,13 @@ Do dzialania programu wymagany jest system 64 bitowy oraz .NETFramework w wersji
     - OR
     - XOR
 * filtry
+    - medianowy
+    - gradient
     - wlasny 3x3
-    - wbudowane ( wygladzania, wyostrzania, laplasjan, gradient)
+    - wbudowane ( wygladzania, wyostrzania, laplasjan)
+* Projekt
+    - tworzenie sekwencji obrazow wraz z zapisem jako .gif
+    - zmiana wybranego koloru
 ```
 
 ### 3. TODO
@@ -39,4 +44,4 @@ Do dzialania programu wymagany jest system 64 bitowy oraz .NETFramework w wersji
 
 ### 4. Bledy
 
-Aktualnie nie stwierdzono.
+- Zamkniecie narzedzie, nie przywraca obrazu do poprzedniego stanu.
