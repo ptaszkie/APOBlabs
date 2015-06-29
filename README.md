@@ -44,4 +44,6 @@ Do dzialania programu wymagany jest system 64 bitowy oraz .NETFramework w wersji
 
 ### 4. Bledy
 
-- Zamkniecie narzedzie, nie przywraca obrazu do poprzedniego stanu.
+```
+- zamkniecie okna dialogowego nie cofa wprowadzonych zmian - zamkniecie rownowazne z akceptacja zmian
+```
