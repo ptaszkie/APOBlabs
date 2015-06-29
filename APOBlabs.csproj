@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{957FDC08-93B0-4917-BCCE-4ED4BE0DCAF4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>APOBlabs</RootNamespace>
+    <AssemblyName>APOBlabs</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Magick.NET-x64, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Magick.NET-Q16-x64.7.0.0.0015\lib\net40-client\Magick.NET-x64.dll</HintPath>
+    </Reference>
+    <Reference Include="Magick.NET.Core, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Magick.NET-Q16-x64.7.0.0.0015\lib\net40-client\Magick.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Magick.NET.Wrapper-x64, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Magick.NET-Q16-x64.7.0.0.0015\lib\net40-client\Magick.NET.Wrapper-x64.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Brightness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Brightness.Designer.cs">
+      <DependentUpon>Brightness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorAndMovement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorAndMovement.Designer.cs">
+      <DependentUpon>ColorAndMovement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compression.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compression.Designer.cs">
+      <DependentUpon>Compression.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Contrast.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contrast.Designer.cs">
+      <DependentUpon>Contrast.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Filters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Filters.Designer.cs">
+      <DependentUpon>Filters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gamma.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gamma.Designer.cs">
+      <DependentUpon>Gamma.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Calculation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calculation.Designer.cs">
+      <DependentUpon>Calculation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Median.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Median.Designer.cs">
+      <DependentUpon>Median.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Posterization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Posterization.Designer.cs">
+      <DependentUpon>Posterization.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Treshold.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Treshold.Designer.cs">
+      <DependentUpon>Treshold.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Histogram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Histogram.Designer.cs">
+      <DependentUpon>Histogram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImageWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageWindow.Designer.cs">
+      <DependentUpon>ImageWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Brightness.resx">
+      <DependentUpon>Brightness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorAndMovement.resx">
+      <DependentUpon>ColorAndMovement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compression.resx">
+      <DependentUpon>Compression.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contrast.resx">
+      <DependentUpon>Contrast.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filters.resx">
+      <DependentUpon>Filters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gamma.resx">
+      <DependentUpon>Gamma.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calculation.resx">
+      <DependentUpon>Calculation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Median.resx">
+      <DependentUpon>Median.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Posterization.resx">
+      <DependentUpon>Posterization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Treshold.resx">
+      <DependentUpon>Treshold.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Histogram.resx">
+      <DependentUpon>Histogram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageWindow.resx">
+      <DependentUpon>ImageWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
