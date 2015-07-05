@@ -73,6 +73,7 @@ namespace APOBlabs
             t[2, 2] = int.Parse(t22.Text);
 
             iw.Filter(t, int.Parse(divider.Text));
+            iw.updateLUT();
             Dispose();
             Close();
         }
@@ -91,30 +92,6 @@ namespace APOBlabs
                 b[2, 0].Text = "0";
                 b[2, 1].Text = "0";
                 b[2, 2].Text = "0";
-            }
-            else if (Preset.Text.Equals("Gradiant Gx"))
-            {
-                b[0, 0].Text = "-1";
-                b[0, 1].Text = "-2";
-                b[0, 2].Text = "-1";
-                b[1, 0].Text = "0";
-                b[1, 1].Text = "0";
-                b[1, 2].Text = "0";
-                b[2, 0].Text = "1";
-                b[2, 1].Text = "2";
-                b[2, 2].Text = "1";
-            }
-            else if (Preset.Text.Equals("Gradiant Gy"))
-            {
-                b[0, 0].Text = "-1";
-                b[0, 1].Text = "0";
-                b[0, 2].Text = "1";
-                b[1, 0].Text = "-2";
-                b[1, 1].Text = "0";
-                b[1, 2].Text = "2";
-                b[2, 0].Text = "-1";
-                b[2, 1].Text = "0";
-                b[2, 2].Text = "1";
             }
             else if (Preset.Text.Equals("Laplasjan"))
             {

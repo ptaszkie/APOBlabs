@@ -123,7 +123,7 @@ namespace APOBlabs
             updateLUT();
         }
 
-        public void updateLUT() // update LUT table
+        public void updateLUT() // aktualizacja tablicy LUT
         {
             Parallel.For(0, 256, i =>
             {
@@ -175,12 +175,12 @@ namespace APOBlabs
 
         } 
 
-        public bool checkGreyscale()
+        public bool checkGreyscale() // spr. czy obraz jest szaroodcieniowy
         {
             return greyscale;
-        } // check whether image is greyscale
+        }
 
-        private UInt32 getCDF() 
+        private UInt32 getCDF() // srednia wartosc pikseli
         {
             UInt32 PixelCounter = 0;
             for (UInt16 i = 0; i < 256; ++i)
@@ -191,7 +191,7 @@ namespace APOBlabs
             return PixelCounter / 256;
         }
 
-        public void Equalisation(int mode) // 1 -average, 2 - random, 3 - neighbours
+        public void Equalisation(int mode) // wyrownywanie histogramu: 1 - srednia, 2 - losowa, 3 - sasiedztwa
         {
             rememberImage();
             if (!greyscale) ToGreyscale();
@@ -282,7 +282,7 @@ namespace APOBlabs
 
         }
 
-        public void ToGreyscale()
+        public void ToGreyscale() // konwersja do szaroodcieniowego
         {
             unsafe
             {
@@ -315,9 +315,9 @@ namespace APOBlabs
                 Picture.Invalidate();
             }
             updateLUT();
-        } // convert image to greyscale
+        } 
 
-        public void Negative()
+        public void Negative() // negatyw
         {
             rememberImage();
 
@@ -348,7 +348,7 @@ namespace APOBlabs
             updateLUT();
         }
 
-        public void Treshold(int val, bool rev)
+        public void Treshold(int val, bool rev) // progowanie
         {
             if (!greyscale) ToGreyscale();
 
@@ -423,7 +423,7 @@ namespace APOBlabs
             }
         }
 
-        public void Gamma(int val)
+        public void Gamma(int val) // regulacja gammy
         {
             float gamma = (float)val / 100.0F;
             int[] tmpLUT = new int[256];
@@ -468,7 +468,7 @@ namespace APOBlabs
             }
         }
 
-        public void Contrast(int val)
+        public void Contrast(int val) // regulacja kontrastu
         {
             double contrastLevel = Math.Pow((100.0 + val) / 100.0, 2);
 
@@ -517,7 +517,7 @@ namespace APOBlabs
             }
         }
 
-        public void Brightness(int val)
+        public void Brightness(int val) // regulacja jasnosci
         {
             unsafe
             {
@@ -561,7 +561,8 @@ namespace APOBlabs
             }
         }
 
-        public void Filter(int[,] t, int d){
+        public Bitmap Filter(int[,] t, int d, bool ret = false) // filtry
+        {
             rememberImage();
 
             unsafe
@@ -608,14 +609,416 @@ namespace APOBlabs
                     }
                 }; // end parallel
                 pic.UnlockBits(bmpDat);
+                if (ret)
+                {
+                    return pic;
+                } 
+
                 Picture.Image.Dispose();
                 Picture.Image = pic;
                 Picture.Invalidate();
+
+                return null;
             }
 
         }
 
+        public void Median(int sizeX, int sizeY) // mediana //TODO: poprawa wydajnosci
+        {
+            Bitmap pic = new Bitmap(Picture.Image);
+            int h = pic.Height,
+                w = pic.Width;
 
 
+            for (int x = sizeX / 2; x < w - sizeX / 2; x++)
+            {
+                for (int y = sizeY / 2; y < h - sizeY / 2; y++)
+                {
+                    
+                    List<byte> R = new List<byte>();
+                    List<byte> G = new List<byte>();
+                    List<byte> B = new List<byte>();
+                    
+                    for(int i=-(sizeX/2);i<=sizeX/2;i++){
+                        for(int j=-(sizeY/2);j<=sizeY/2;j++){
+
+                            Color p = pic.GetPixel(x+i,y+j);
+                            R.Add(p.R);
+                            G.Add(p.G);
+                            B.Add(p.B);
+                            //MessageBox.Show("dla: " + x.ToString() + "," + y.ToString() + " => " + (x + i).ToString() + "," + (y + j).ToString());
+                        }
+                    }
+
+                    R.Sort();
+                    G.Sort();
+                    B.Sort();
+
+                    pic.SetPixel(x,y,Color.FromArgb(R[R.Count/2],G[G.Count/2],B[B.Count/2]));
+                }
+
+            }
+            Picture.Image.Dispose();
+            Picture.Image = pic;
+            Picture.Invalidate();
+        }
+
+        public void Dilation(bool enhanted = true) // dylatacja
+        {
+            if (enhanted) rememberImage();
+
+            unsafe
+            {
+                Bitmap pic = new Bitmap(Picture.Image);
+                Bitmap res = (Bitmap)pic.Clone();
+                BitmapData bmpDat = pic.LockBits(new Rectangle(0, 0, pic.Width, pic.Height), ImageLockMode.ReadWrite, pic.PixelFormat);
+                BitmapData resDat = res.LockBits(new Rectangle(0, 0, res.Width, res.Height), ImageLockMode.ReadWrite, res.PixelFormat);
+                
+                int BytesPerPixel = System.Drawing.Bitmap.GetPixelFormatSize(pic.PixelFormat) / 8;
+                int HeightInPixels = bmpDat.Height;
+                int WidthInBytes = bmpDat.Width * BytesPerPixel;
+                byte* PtrFirstPixel = (byte*)bmpDat.Scan0;
+                byte* res_PtrFirstPixel = (byte*)resDat.Scan0;
+
+                Parallel.For(1, HeightInPixels-1, y=>
+                {
+                    byte* CurrentLine = PtrFirstPixel + (y * bmpDat.Stride);
+                    byte* resCLine = res_PtrFirstPixel + (y * resDat.Stride);
+                    for (int x = BytesPerPixel; x < WidthInBytes-BytesPerPixel; x = x + BytesPerPixel)
+                    {
+                        List<byte> B = new List<byte>();
+                        B.Add(CurrentLine[x - BytesPerPixel - bmpDat.Stride]);
+                        B.Add(CurrentLine[x - bmpDat.Stride]);
+                        B.Add(CurrentLine[x + BytesPerPixel - bmpDat.Stride]);
+
+                        B.Add(CurrentLine[x - BytesPerPixel]);
+                        B.Add(CurrentLine[x]);
+                        B.Add(CurrentLine[x + BytesPerPixel]);
+
+                        B.Add(CurrentLine[x - BytesPerPixel + bmpDat.Stride]);
+                        B.Add(CurrentLine[x + bmpDat.Stride]);
+                        B.Add(CurrentLine[x + BytesPerPixel + bmpDat.Stride]);
+
+                        List<byte> G = new List<byte>();
+                        G.Add(CurrentLine[x + 1 - BytesPerPixel - bmpDat.Stride]);
+                        G.Add(CurrentLine[x + 1 - bmpDat.Stride]);
+                        G.Add(CurrentLine[x + 1 + BytesPerPixel - bmpDat.Stride]);
+
+                        G.Add(CurrentLine[x + 1 - BytesPerPixel]);
+                        G.Add(CurrentLine[x + 1]);
+                        G.Add(CurrentLine[x + 1 + BytesPerPixel]);
+
+                        G.Add(CurrentLine[x + 1 - BytesPerPixel + bmpDat.Stride]);
+                        G.Add(CurrentLine[x + 1 + bmpDat.Stride]);
+                        G.Add(CurrentLine[x + 1 + BytesPerPixel + bmpDat.Stride]);
+
+                        List<byte> R = new List<byte>();
+                        R.Add(CurrentLine[x + 2 - BytesPerPixel - bmpDat.Stride]);
+                        R.Add(CurrentLine[x + 2 - bmpDat.Stride]);
+                        R.Add(CurrentLine[x + 2 + BytesPerPixel - bmpDat.Stride]);
+
+                        R.Add(CurrentLine[x + 2 - BytesPerPixel]);
+                        R.Add(CurrentLine[x + 2]);
+                        R.Add(CurrentLine[x + 2 + BytesPerPixel]);
+
+                        R.Add(CurrentLine[x + 2 - BytesPerPixel + bmpDat.Stride]);
+                        R.Add(CurrentLine[x + 2 + bmpDat.Stride]);
+                        R.Add(CurrentLine[x + 2 + BytesPerPixel + bmpDat.Stride]);
+
+                        resCLine[x] = B.Max();
+                        resCLine[x + 1] = G.Max();
+                        resCLine[x + 2] = R.Max();
+                    }
+                });
+                res.UnlockBits(resDat);
+                pic.UnlockBits(bmpDat);
+                
+                Picture.Image.Dispose();
+                Picture.Image = res;
+                Picture.Invalidate();
+            }
+            if (enhanted)
+            {
+                
+                updateLUT();
+            }
+        }
+
+        public void Erosion(bool enhanted=true) // dylatacja
+        {
+            if (enhanted) rememberImage();
+
+            unsafe
+            {
+                Bitmap pic = new Bitmap(Picture.Image);
+                Bitmap res = (Bitmap)pic.Clone();
+                BitmapData bmpDat = pic.LockBits(new Rectangle(0, 0, pic.Width, pic.Height), ImageLockMode.ReadWrite, pic.PixelFormat);
+                BitmapData resDat = res.LockBits(new Rectangle(0, 0, res.Width, res.Height), ImageLockMode.ReadWrite, res.PixelFormat);
+
+                int BytesPerPixel = System.Drawing.Bitmap.GetPixelFormatSize(pic.PixelFormat) / 8;
+                int HeightInPixels = bmpDat.Height;
+                int WidthInBytes = bmpDat.Width * BytesPerPixel;
+                byte* PtrFirstPixel = (byte*)bmpDat.Scan0;
+                byte* res_PtrFirstPixel = (byte*)resDat.Scan0;
+
+                 Parallel.For(1, HeightInPixels-1, y=>
+                {
+                    byte* CurrentLine = PtrFirstPixel + (y * bmpDat.Stride);
+                    byte* resCLine = res_PtrFirstPixel + (y * resDat.Stride);
+                    for (int x = BytesPerPixel; x < WidthInBytes - BytesPerPixel; x = x + BytesPerPixel)
+                    {
+                        List<byte> B = new List<byte>();
+                        B.Add(CurrentLine[x - BytesPerPixel - bmpDat.Stride]);
+                        B.Add(CurrentLine[x - bmpDat.Stride]);
+                        B.Add(CurrentLine[x + BytesPerPixel - bmpDat.Stride]);
+
+                        B.Add(CurrentLine[x - BytesPerPixel]);
+                        B.Add(CurrentLine[x]);
+                        B.Add(CurrentLine[x + BytesPerPixel]);
+
+                        B.Add(CurrentLine[x - BytesPerPixel + bmpDat.Stride]);
+                        B.Add(CurrentLine[x + bmpDat.Stride]);
+                        B.Add(CurrentLine[x + BytesPerPixel + bmpDat.Stride]);
+
+                        List<byte> G = new List<byte>();
+                        G.Add(CurrentLine[x + 1 - BytesPerPixel - bmpDat.Stride]);
+                        G.Add(CurrentLine[x + 1 - bmpDat.Stride]);
+                        G.Add(CurrentLine[x + 1 + BytesPerPixel - bmpDat.Stride]);
+
+                        G.Add(CurrentLine[x + 1 - BytesPerPixel]);
+                        G.Add(CurrentLine[x + 1]);
+                        G.Add(CurrentLine[x + 1 + BytesPerPixel]);
+
+                        G.Add(CurrentLine[x + 1 - BytesPerPixel + bmpDat.Stride]);
+                        G.Add(CurrentLine[x + 1 + bmpDat.Stride]);
+                        G.Add(CurrentLine[x + 1 + BytesPerPixel + bmpDat.Stride]);
+
+                        List<byte> R = new List<byte>();
+                        R.Add(CurrentLine[x + 2 - BytesPerPixel - bmpDat.Stride]);
+                        R.Add(CurrentLine[x + 2 - bmpDat.Stride]);
+                        R.Add(CurrentLine[x + 2 + BytesPerPixel - bmpDat.Stride]);
+
+                        R.Add(CurrentLine[x + 2 - BytesPerPixel]);
+                        R.Add(CurrentLine[x + 2]);
+                        R.Add(CurrentLine[x + 2 + BytesPerPixel]);
+
+                        R.Add(CurrentLine[x + 2 - BytesPerPixel + bmpDat.Stride]);
+                        R.Add(CurrentLine[x + 2 + bmpDat.Stride]);
+                        R.Add(CurrentLine[x + 2 + BytesPerPixel + bmpDat.Stride]);
+
+                        resCLine[x] = B.Min();
+                        resCLine[x + 1] = G.Min();
+                        resCLine[x + 2] = R.Min();
+                    }
+                });
+                res.UnlockBits(resDat);
+                pic.UnlockBits(bmpDat);
+
+                Picture.Image.Dispose();
+                Picture.Image = res;
+                Picture.Invalidate();
+
+            }
+            if(enhanted) {
+                updateLUT();
+            }
+        }
+
+        public void ImgClosing()
+        {
+            rememberImage();
+
+            Dilation(false);
+            Erosion(false);
+            Picture.Invalidate();
+            updateLUT();
+        }
+
+        public void ImgOpening()
+        {
+            rememberImage();
+
+            Erosion(false);
+            Dilation(false);
+            Picture.Invalidate();
+            updateLUT();
+        }
+
+    #region thining --- pomoc do ImgThining
+        public static bool[][] Image2Bool(Image img)
+        {
+            Bitmap bmp = new Bitmap(img);
+            bool[][] s = new bool[bmp.Height][];
+            for (int y = 0; y < bmp.Height; y++)
+            {
+                s[y] = new bool[bmp.Width];
+                for (int x = 0; x < bmp.Width; x++)
+                    s[y][x] = bmp.GetPixel(x, y).GetBrightness() < 0.4;
+            }
+            return s;
+
+        }
+        public static Image Bool2Image(bool[][] s)
+        {
+            Bitmap bmp = new Bitmap(s[0].Length, s.Length);
+            using (Graphics g = Graphics.FromImage(bmp)) g.Clear(Color.White);
+            for (int y = 0; y < bmp.Height; y++)
+                for (int x = 0; x < bmp.Width; x++)
+                    if (s[y][x]) bmp.SetPixel(x, y, Color.Black);
+
+            return (Bitmap)bmp;
+        }
+        public static bool[][] ZhangSuenThinning(bool[][] s)
+        {
+            bool[][] temp = s;
+            bool even = true;
+
+            for (int a = 1; a < s.Length - 1; a++)
+            {
+                for (int b = 1; b < s[0].Length - 1; b++)
+                {
+                    if (SuenThinningAlg(a, b, temp, even))
+                    {
+                        temp[a][b] = false;
+                    }
+                    even = !even;
+                }
+            }
+
+            return temp;
+        }
+        static bool SuenThinningAlg(int x, int y, bool[][] s, bool even)
+        {
+            bool p2 = s[x][y - 1];
+            bool p3 = s[x + 1][y - 1];
+            bool p4 = s[x + 1][y];
+            bool p5 = s[x + 1][y + 1];
+            bool p6 = s[x][y + 1];
+            bool p7 = s[x - 1][y + 1];
+            bool p8 = s[x - 1][y];
+            bool p9 = s[x - 1][y - 1];
+
+
+            int bp1 = NumberOfNonZeroNeighbors(x, y, s);
+            if (bp1 >= 2 && bp1 <= 6)//2nd condition
+            {
+                if (NumberOfZeroToOneTransitionFromP9(x, y, s) == 1)
+                {
+                    if (even)
+                    {
+                        if (!((p2 && p4) && p8))
+                        {
+                            if (!((p2 && p6) && p8))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!((p2 && p4) && p6))
+                        {
+                            if (!((p4 && p6) && p8))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            return false;
+        }
+        static int NumberOfZeroToOneTransitionFromP9(int x, int y, bool[][] s)
+        {
+            bool p2 = s[x][y - 1];
+            bool p3 = s[x + 1][y - 1];
+            bool p4 = s[x + 1][y];
+            bool p5 = s[x + 1][y + 1];
+            bool p6 = s[x][y + 1];
+            bool p7 = s[x - 1][y + 1];
+            bool p8 = s[x - 1][y];
+            bool p9 = s[x - 1][y - 1];
+
+            int A = Convert.ToInt32((p2 == false && p3 == true)) + Convert.ToInt32((p3 == false && p4 == true)) +
+                     Convert.ToInt32((p4 == false && p5 == true)) + Convert.ToInt32((p5 == false && p6 == true)) +
+                     Convert.ToInt32((p6 == false && p7 == true)) + Convert.ToInt32((p7 == false && p8 == true)) +
+                     Convert.ToInt32((p8 == false && p9 == true)) + Convert.ToInt32((p9 == false && p2 == true));
+            return A;
+        }
+        static int NumberOfNonZeroNeighbors(int x, int y, bool[][] s)
+        {
+            int count = 0;
+            if (s[x - 1][y])
+                count++;
+            if (s[x - 1][y + 1])
+                count++;
+            if (s[x - 1][y - 1])
+                count++;
+            if (s[x][y + 1])
+                count++;
+            if (s[x][y - 1])
+                count++;
+            if (s[x + 1][y])
+                count++;
+            if (s[x + 1][y + 1])
+                count++;
+            if (s[x + 1][y - 1])
+                count++;
+            return count;
+        }
+    #endregion 
+        public void ImgThining()
+        {
+            bool[][] t = Image2Bool(Picture.Image);
+            t = ZhangSuenThinning(t);
+            Picture.Image = Bool2Image(t);
+        }
+
+        public void Gradient()
+        {
+            rememberImage();
+
+            int[,] t = new int[3, 3]{{-1,-2,-1},{0,0,0},{1,2,1}};
+
+            Bitmap res = Filter(t, 1, true);
+            t = new int[3, 3] { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
+            Bitmap pic = Filter(t, 1, true);
+
+           unsafe
+            {
+                BitmapData bmpDat = pic.LockBits(new Rectangle(0, 0, pic.Width, pic.Height), ImageLockMode.ReadWrite, pic.PixelFormat);
+                BitmapData resDat = res.LockBits(new Rectangle(0, 0, res.Width, res.Height), ImageLockMode.ReadWrite, res.PixelFormat);
+
+                int BytesPerPixel = System.Drawing.Bitmap.GetPixelFormatSize(pic.PixelFormat) / 8;
+                int HeightInPixels = bmpDat.Height;
+                int WidthInBytes = bmpDat.Width * BytesPerPixel;
+                byte* PtrFirstPixel = (byte*)bmpDat.Scan0;
+                byte* res_PtrFirstPixel = (byte*)resDat.Scan0;
+
+                 //Parallel.For(1, HeightInPixels-1, y=>
+               for(int y=0;y<HeightInPixels;++y) 
+               {
+                    byte* CurrentLine = PtrFirstPixel + (y * bmpDat.Stride);
+                    byte* resCLine = res_PtrFirstPixel + (y * resDat.Stride);
+                    for (int x = BytesPerPixel; x < WidthInBytes - BytesPerPixel; x = x + BytesPerPixel)
+                    {
+
+                        resCLine[x] = (byte)Math.Sqrt(Math.Pow(resCLine[x], 2) + Math.Pow(CurrentLine[x], 2));
+                        resCLine[x + 1] = (byte)Math.Sqrt(Math.Pow(resCLine[x+1], 2) + Math.Pow(CurrentLine[x+1], 2));
+                        resCLine[x + 2] = (byte)Math.Sqrt(Math.Pow(resCLine[x + 2], 2) + Math.Pow(CurrentLine[x + 2], 2));
+                    }
+                };
+                res.UnlockBits(resDat);
+                pic.UnlockBits(bmpDat);
+
+                Picture.Image.Dispose();
+                Picture.Image = res;
+                Picture.Invalidate();
+
+            }
+
+            }
+        }
     }
-}

@@ -16,5 +16,11 @@ namespace APOBlabs
         {
             InitializeComponent();
         }
+
+        private void otworzStrone(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(link.Text);
+            //new ProcessStartInfo(link.Text).Start();
+        }
     }
 }

@@ -140,13 +140,9 @@
             this.Preset.Items.AddRange(new object[] {
             "Custom",
             "Laplasjan",
-            "Gradiant Gx",
-            "Gradiant Gy",
             "Edge detection #1",
             "Edge detection #2",
-            "Edge detection #3",
-            "Sobel Gx",
-            "Sobel Gy"});
+            "Edge detection #3"});
             this.Preset.Location = new System.Drawing.Point(12, 28);
             this.Preset.Name = "Preset";
             this.Preset.Size = new System.Drawing.Size(168, 24);
@@ -218,6 +214,7 @@
             this.Controls.Add(this.t00);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Filters";
+            this.Text = "Custom filters";
             this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();

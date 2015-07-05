@@ -25,7 +25,7 @@ namespace APOBlabs
         {
             OpenFileDialog FileOpen = new OpenFileDialog();
             FileOpen.Title = "Open Image File";
-            FileOpen.Filter = "JPEG (*.jpg)|*.jpg|Bitmap (*.bmp)|*.bmp|TIFF (*.tiff)|*.tiff|All (*.*)|*.*";
+            FileOpen.Filter = "All (*.*)|*.*|Bitmap (*.bmp)|*.bmp|TIFF (*.tiff)|*.tiff|JPEG (*.jpg)|*.jpg";
             DialogResult Result = FileOpen.ShowDialog();
             if (Result == DialogResult.OK)
             {
@@ -57,9 +57,8 @@ namespace APOBlabs
 
                 // Menu operations
                 MenuOperations.Enabled = true;
-
+                
                 MenuOper_Calculation.Enabled = true;
-                MenuOper_Filters.Enabled = true;
                 
                 // adjustment submenu
                 MenuOper_Adj_Gamma.Enabled = true;
@@ -74,9 +73,20 @@ namespace APOBlabs
                 MenuOper_Equ_Average.Enabled = true;
                 MenuOper_Equ_Random.Enabled = true;
                 MenuOper_Equ_Neighbor.Enabled = true;
-                
 
+                // filters submenu
+                MenuOper_Filters_Custom.Enabled = true;
+                MenuOper_Filters_Median.Enabled = true;
                 
+                // morphological submenu
+                MenuOper_Morph_Dilation.Enabled = true;
+                MenuOper_Morph_Erosion.Enabled = true;
+                MenuOper_Morph_Closing.Enabled = true;
+                MenuOper_Morph_Opening.Enabled = true;
+                MenuOper_Morph_Thining.Enabled = true;
+
+                // compression menu
+                MenuCompression.Enabled = true;
 
                 return;
             }
@@ -98,7 +108,6 @@ namespace APOBlabs
             MenuOperations.Enabled = false;
 
             MenuOper_Calculation.Enabled = false;
-            MenuOper_Filters.Enabled = false;
 
             // adjustment submenu
             MenuOper_Adj_Gamma.Enabled = false;
@@ -113,6 +122,20 @@ namespace APOBlabs
             MenuOper_Equ_Average.Enabled = false;
             MenuOper_Equ_Random.Enabled = false;
             MenuOper_Equ_Neighbor.Enabled = false;
+
+            // filters submenu
+            MenuOper_Filters_Custom.Enabled = false;
+            MenuOper_Filters_Median.Enabled = false;
+
+            // morphological submenu
+            MenuOper_Morph_Dilation.Enabled = false;
+            MenuOper_Morph_Erosion.Enabled = false;
+            MenuOper_Morph_Closing.Enabled = false;
+            MenuOper_Morph_Opening.Enabled = false;
+            MenuOper_Morph_Thining.Enabled = false;
+
+            // compression menu
+            MenuCompression.Enabled = false;
         }
 
         private void MenuFile_Save_Click(object sender, EventArgs e) // save open file - available for open, not duplicated images
@@ -120,17 +143,7 @@ namespace APOBlabs
             aiw.getBitmap().Save(aiw.getFilepath());
         }
 
-        private void MenuImage_Duplicate_Click(object sender, EventArgs e)
-        {
-            new ImageWindow(aiw);
-        }
-
-        private void MenuImage_Undo_Click(object sender, EventArgs e) // undo last operation
-        {
-            aiw.undo();
-        }
-
-        private void MenuFile_SaveAs_Click(object sender, EventArgs e) // save image as...
+        private void MenuFile_SaveAs_Click(object sender=null, EventArgs e=null) // save image as...
         {
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "JPEG|*.jpg; *.jpeg |Bitmap|*.bmp |TIFF|*.tiff |All files|*.* ";
@@ -141,6 +154,16 @@ namespace APOBlabs
                 aiw.setFilepath(sf.FileName);
             }
             else sf.Dispose();
+        }
+
+        private void MenuImage_Duplicate_Click(object sender, EventArgs e)
+        {
+            new ImageWindow(aiw);
+        }
+
+        private void MenuImage_Undo_Click(object sender, EventArgs e) // undo last operation
+        {
+            aiw.undo();
         }
 
         private void MenuAbout_Click(object sender, EventArgs e)
@@ -229,6 +252,49 @@ namespace APOBlabs
             new Filters(aiw);
         }
 
+        private void MenuOper_Filters_Median_Click(object sender, EventArgs e)
+        {
+            new Median(aiw);
+        }
 
+        private void MenuOper_Morph_Dilation_Click(object sender, EventArgs e)
+        {
+            aiw.Dilation();
+        }
+
+        private void MenuOper_Morph_Erosion_Click(object sender, EventArgs e)
+        {
+            aiw.Erosion();
+        }
+
+        private void MenuOper_Morph_Closing_Click(object sender, EventArgs e)
+        {
+            aiw.ImgClosing();
+        }
+
+        private void MenuOper_Morph_Opening_Click(object sender, EventArgs e)
+        {
+            aiw.ImgOpening();
+        }
+
+        private void MenuOper_Morph_Thining_Click(object sender, EventArgs e)
+        {
+            aiw.ImgThining();
+        }
+
+        private void MenuCompression_Click(object sender, EventArgs e)
+        {
+            new Compression(aiw);
+        }
+
+        private void projektToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ColorAndMovement();
+        }
+
+        private void MenuOper_Filters_Gradient_Click(object sender, EventArgs e)
+        {
+            aiw.Gradient();
+        }
     }
 }

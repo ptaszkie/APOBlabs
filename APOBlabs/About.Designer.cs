@@ -34,6 +34,7 @@
             this.logo = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.link = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,7 +74,7 @@
             // 
             this.logo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.logo.Image = global::APOBlabs.Properties.Resources.logo;
-            this.logo.Location = new System.Drawing.Point(175, 57);
+            this.logo.Location = new System.Drawing.Point(167, 57);
             this.logo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.logo.Name = "logo";
             this.logo.Size = new System.Drawing.Size(281, 223);
@@ -103,12 +104,28 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "Authors";
             // 
+            // link
+            // 
+            this.link.AutoSize = true;
+            this.link.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.link.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.link.Location = new System.Drawing.Point(189, 282);
+            this.link.Name = "link";
+            this.link.Size = new System.Drawing.Size(242, 17);
+            this.link.TabIndex = 6;
+            this.link.TabStop = true;
+            this.link.Text = "https://github.com/quavepl/APOBlabs";
+            this.link.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.otworzStrone);
+            // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(455, 270);
+            this.ClientSize = new System.Drawing.Size(447, 314);
+            this.Controls.Add(this.link);
             this.Controls.Add(this.UniversityName);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -135,5 +152,6 @@
         private System.Windows.Forms.PictureBox logo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.LinkLabel link;
     }
 }

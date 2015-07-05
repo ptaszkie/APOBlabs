@@ -52,6 +52,18 @@
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Magick.NET-x64, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Magick.NET-Q16-x64.7.0.0.0015\lib\net40-client\Magick.NET-x64.dll</HintPath>
+    </Reference>
+    <Reference Include="Magick.NET.Core, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Magick.NET-Q16-x64.7.0.0.0015\lib\net40-client\Magick.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Magick.NET.Wrapper-x64, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Magick.NET-Q16-x64.7.0.0.0015\lib\net40-client\Magick.NET.Wrapper-x64.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -76,6 +88,18 @@
     <Compile Include="Brightness.Designer.cs">
       <DependentUpon>Brightness.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorAndMovement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorAndMovement.Designer.cs">
+      <DependentUpon>ColorAndMovement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compression.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compression.Designer.cs">
+      <DependentUpon>Compression.cs</DependentUpon>
+    </Compile>
     <Compile Include="Contrast.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +123,12 @@
     </Compile>
     <Compile Include="Calculation.Designer.cs">
       <DependentUpon>Calculation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Median.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Median.Designer.cs">
+      <DependentUpon>Median.cs</DependentUpon>
     </Compile>
     <Compile Include="Posterization.cs">
       <SubType>Form</SubType>
@@ -138,6 +168,12 @@
     <EmbeddedResource Include="Brightness.resx">
       <DependentUpon>Brightness.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ColorAndMovement.resx">
+      <DependentUpon>ColorAndMovement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compression.resx">
+      <DependentUpon>Compression.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Contrast.resx">
       <DependentUpon>Contrast.cs</DependentUpon>
     </EmbeddedResource>
@@ -149,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Calculation.resx">
       <DependentUpon>Calculation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Median.resx">
+      <DependentUpon>Median.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Posterization.resx">
       <DependentUpon>Posterization.cs</DependentUpon>
@@ -175,6 +214,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

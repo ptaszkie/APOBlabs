@@ -55,7 +55,18 @@
             this.MenuOper_Equ_Neighbor = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuOper_Calculation = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuOper_Filters = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOper_Filters_Custom = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOper_Filters_Median = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOper_Morph = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOper_Morph_Dilation = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOper_Morph_Erosion = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOper_Morph_Closing = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOper_Morph_Opening = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOper_Morph_Thining = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuCompression = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.projektToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOper_Filters_Gradient = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,6 +78,8 @@
             this.MenuFile,
             this.MenuImage,
             this.MenuOperations,
+            this.MenuCompression,
+            this.projektToolStripMenuItem,
             this.MenuAbout});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
@@ -102,6 +115,7 @@
             this.MenuFile_Save.Size = new System.Drawing.Size(226, 24);
             this.MenuFile_Save.Text = "Save";
             this.MenuFile_Save.DropDownOpened += new System.EventHandler(this.check);
+            this.MenuFile_Save.Click += new System.EventHandler(this.MenuFile_Save_Click);
             // 
             // MenuFile_SaveAs
             // 
@@ -162,7 +176,8 @@
             this.MenuOperations_Adjustment,
             this.MenuOperations_Equ_Neighborhood,
             this.MenuOper_Calculation,
-            this.MenuOper_Filters});
+            this.MenuOper_Filters,
+            this.MenuOper_Morph});
             this.MenuOperations.Enabled = false;
             this.MenuOperations.ForeColor = System.Drawing.Color.DarkGray;
             this.MenuOperations.Name = "MenuOperations";
@@ -181,61 +196,64 @@
             this.MenuOper_Adj_Treshold,
             this.MenuOper_Adj_Posterize});
             this.MenuOperations_Adjustment.Name = "MenuOperations_Adjustment";
-            this.MenuOperations_Adjustment.Size = new System.Drawing.Size(175, 24);
+            this.MenuOperations_Adjustment.Size = new System.Drawing.Size(203, 24);
             this.MenuOperations_Adjustment.Text = "Adjustment";
             // 
             // MenuOper_Adj_Gamma
             // 
             this.MenuOper_Adj_Gamma.Name = "MenuOper_Adj_Gamma";
-            this.MenuOper_Adj_Gamma.Size = new System.Drawing.Size(193, 24);
+            this.MenuOper_Adj_Gamma.Size = new System.Drawing.Size(214, 24);
             this.MenuOper_Adj_Gamma.Text = "Gamma";
             this.MenuOper_Adj_Gamma.Click += new System.EventHandler(this.MenuOper_Adj_Gamma_Click);
             // 
             // MenuOper_Adj_Contrast
             // 
             this.MenuOper_Adj_Contrast.Name = "MenuOper_Adj_Contrast";
-            this.MenuOper_Adj_Contrast.Size = new System.Drawing.Size(193, 24);
+            this.MenuOper_Adj_Contrast.Size = new System.Drawing.Size(214, 24);
             this.MenuOper_Adj_Contrast.Text = "Contrast";
             this.MenuOper_Adj_Contrast.Click += new System.EventHandler(this.MenuOper_Adj_Contrast_Click);
             // 
             // MenuOper_Adj_Brightness
             // 
             this.MenuOper_Adj_Brightness.Name = "MenuOper_Adj_Brightness";
-            this.MenuOper_Adj_Brightness.Size = new System.Drawing.Size(193, 24);
+            this.MenuOper_Adj_Brightness.Size = new System.Drawing.Size(214, 24);
             this.MenuOper_Adj_Brightness.Text = "Brightness";
             this.MenuOper_Adj_Brightness.Click += new System.EventHandler(this.MenuOper_Adj_Brightness_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(190, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(211, 6);
             // 
             // MenuOper_Adj_Greyscale
             // 
             this.MenuOper_Adj_Greyscale.Name = "MenuOper_Adj_Greyscale";
             this.MenuOper_Adj_Greyscale.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.MenuOper_Adj_Greyscale.Size = new System.Drawing.Size(193, 24);
+            this.MenuOper_Adj_Greyscale.Size = new System.Drawing.Size(214, 24);
             this.MenuOper_Adj_Greyscale.Text = "Greyscale";
             this.MenuOper_Adj_Greyscale.Click += new System.EventHandler(this.MenuOper_Adj_Greyscale_Click);
             // 
             // MenuOper_Adj_Negative
             // 
             this.MenuOper_Adj_Negative.Name = "MenuOper_Adj_Negative";
-            this.MenuOper_Adj_Negative.Size = new System.Drawing.Size(193, 24);
+            this.MenuOper_Adj_Negative.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.MenuOper_Adj_Negative.Size = new System.Drawing.Size(214, 24);
             this.MenuOper_Adj_Negative.Text = "Negative";
             this.MenuOper_Adj_Negative.Click += new System.EventHandler(this.MenuOper_Adj_Negative_Click);
             // 
             // MenuOper_Adj_Treshold
             // 
             this.MenuOper_Adj_Treshold.Name = "MenuOper_Adj_Treshold";
-            this.MenuOper_Adj_Treshold.Size = new System.Drawing.Size(193, 24);
+            this.MenuOper_Adj_Treshold.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.MenuOper_Adj_Treshold.Size = new System.Drawing.Size(214, 24);
             this.MenuOper_Adj_Treshold.Text = "Treshold";
             this.MenuOper_Adj_Treshold.Click += new System.EventHandler(this.MenuOper_Adj_Treshold_Click);
             // 
             // MenuOper_Adj_Posterize
             // 
             this.MenuOper_Adj_Posterize.Name = "MenuOper_Adj_Posterize";
-            this.MenuOper_Adj_Posterize.Size = new System.Drawing.Size(193, 24);
+            this.MenuOper_Adj_Posterize.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.MenuOper_Adj_Posterize.Size = new System.Drawing.Size(214, 24);
             this.MenuOper_Adj_Posterize.Text = "Posterization";
             this.MenuOper_Adj_Posterize.Click += new System.EventHandler(this.MenuOper_Adj_Posterize_Click);
             // 
@@ -246,43 +264,119 @@
             this.MenuOper_Equ_Random,
             this.MenuOper_Equ_Neighbor});
             this.MenuOperations_Equ_Neighborhood.Name = "MenuOperations_Equ_Neighborhood";
-            this.MenuOperations_Equ_Neighborhood.Size = new System.Drawing.Size(175, 24);
+            this.MenuOperations_Equ_Neighborhood.Size = new System.Drawing.Size(203, 24);
             this.MenuOperations_Equ_Neighborhood.Text = "Equalization";
             // 
             // MenuOper_Equ_Average
             // 
             this.MenuOper_Equ_Average.Name = "MenuOper_Equ_Average";
-            this.MenuOper_Equ_Average.Size = new System.Drawing.Size(176, 24);
+            this.MenuOper_Equ_Average.Size = new System.Drawing.Size(149, 24);
             this.MenuOper_Equ_Average.Text = "Average";
             this.MenuOper_Equ_Average.Click += new System.EventHandler(this.MenuOper_Equ_Average_Click);
             // 
             // MenuOper_Equ_Random
             // 
             this.MenuOper_Equ_Random.Name = "MenuOper_Equ_Random";
-            this.MenuOper_Equ_Random.Size = new System.Drawing.Size(176, 24);
+            this.MenuOper_Equ_Random.Size = new System.Drawing.Size(149, 24);
             this.MenuOper_Equ_Random.Text = "Random";
             this.MenuOper_Equ_Random.Click += new System.EventHandler(this.MenuOper_Equ_Random_Click);
             // 
             // MenuOper_Equ_Neighbor
             // 
             this.MenuOper_Equ_Neighbor.Name = "MenuOper_Equ_Neighbor";
-            this.MenuOper_Equ_Neighbor.Size = new System.Drawing.Size(176, 24);
-            this.MenuOper_Equ_Neighbor.Text = "Neighborhood";
+            this.MenuOper_Equ_Neighbor.Size = new System.Drawing.Size(149, 24);
+            this.MenuOper_Equ_Neighbor.Text = "Neighbour";
             this.MenuOper_Equ_Neighbor.Click += new System.EventHandler(this.MenuOper_Equ_Neighbor_Click);
             // 
             // MenuOper_Calculation
             // 
             this.MenuOper_Calculation.Name = "MenuOper_Calculation";
-            this.MenuOper_Calculation.Size = new System.Drawing.Size(175, 24);
+            this.MenuOper_Calculation.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.MenuOper_Calculation.Size = new System.Drawing.Size(203, 24);
             this.MenuOper_Calculation.Text = "Calculation";
             this.MenuOper_Calculation.Click += new System.EventHandler(this.MenuOper_Calculation_Click);
             // 
             // MenuOper_Filters
             // 
+            this.MenuOper_Filters.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuOper_Filters_Custom,
+            this.MenuOper_Filters_Median,
+            this.MenuOper_Filters_Gradient});
             this.MenuOper_Filters.Name = "MenuOper_Filters";
-            this.MenuOper_Filters.Size = new System.Drawing.Size(175, 24);
+            this.MenuOper_Filters.Size = new System.Drawing.Size(203, 24);
             this.MenuOper_Filters.Text = "Filters";
-            this.MenuOper_Filters.Click += new System.EventHandler(this.MenuOper_Filters_Click);
+            // 
+            // MenuOper_Filters_Custom
+            // 
+            this.MenuOper_Filters_Custom.Name = "MenuOper_Filters_Custom";
+            this.MenuOper_Filters_Custom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.MenuOper_Filters_Custom.Size = new System.Drawing.Size(183, 24);
+            this.MenuOper_Filters_Custom.Text = "Custom";
+            this.MenuOper_Filters_Custom.Click += new System.EventHandler(this.MenuOper_Filters_Click);
+            // 
+            // MenuOper_Filters_Median
+            // 
+            this.MenuOper_Filters_Median.Name = "MenuOper_Filters_Median";
+            this.MenuOper_Filters_Median.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.MenuOper_Filters_Median.Size = new System.Drawing.Size(183, 24);
+            this.MenuOper_Filters_Median.Text = "Median";
+            this.MenuOper_Filters_Median.Click += new System.EventHandler(this.MenuOper_Filters_Median_Click);
+            // 
+            // MenuOper_Morph
+            // 
+            this.MenuOper_Morph.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuOper_Morph_Dilation,
+            this.MenuOper_Morph_Erosion,
+            this.MenuOper_Morph_Closing,
+            this.MenuOper_Morph_Opening,
+            this.MenuOper_Morph_Thining});
+            this.MenuOper_Morph.Name = "MenuOper_Morph";
+            this.MenuOper_Morph.Size = new System.Drawing.Size(203, 24);
+            this.MenuOper_Morph.Text = "Morphological";
+            // 
+            // MenuOper_Morph_Dilation
+            // 
+            this.MenuOper_Morph_Dilation.Name = "MenuOper_Morph_Dilation";
+            this.MenuOper_Morph_Dilation.Size = new System.Drawing.Size(144, 24);
+            this.MenuOper_Morph_Dilation.Text = "Dilatation";
+            this.MenuOper_Morph_Dilation.Click += new System.EventHandler(this.MenuOper_Morph_Dilation_Click);
+            // 
+            // MenuOper_Morph_Erosion
+            // 
+            this.MenuOper_Morph_Erosion.Name = "MenuOper_Morph_Erosion";
+            this.MenuOper_Morph_Erosion.Size = new System.Drawing.Size(144, 24);
+            this.MenuOper_Morph_Erosion.Text = "Erosion";
+            this.MenuOper_Morph_Erosion.Click += new System.EventHandler(this.MenuOper_Morph_Erosion_Click);
+            // 
+            // MenuOper_Morph_Closing
+            // 
+            this.MenuOper_Morph_Closing.Name = "MenuOper_Morph_Closing";
+            this.MenuOper_Morph_Closing.Size = new System.Drawing.Size(144, 24);
+            this.MenuOper_Morph_Closing.Text = "Closing";
+            this.MenuOper_Morph_Closing.Click += new System.EventHandler(this.MenuOper_Morph_Closing_Click);
+            // 
+            // MenuOper_Morph_Opening
+            // 
+            this.MenuOper_Morph_Opening.Name = "MenuOper_Morph_Opening";
+            this.MenuOper_Morph_Opening.Size = new System.Drawing.Size(144, 24);
+            this.MenuOper_Morph_Opening.Text = "Opening";
+            this.MenuOper_Morph_Opening.Click += new System.EventHandler(this.MenuOper_Morph_Opening_Click);
+            // 
+            // MenuOper_Morph_Thining
+            // 
+            this.MenuOper_Morph_Thining.Name = "MenuOper_Morph_Thining";
+            this.MenuOper_Morph_Thining.Size = new System.Drawing.Size(144, 24);
+            this.MenuOper_Morph_Thining.Text = "Thining";
+            this.MenuOper_Morph_Thining.Click += new System.EventHandler(this.MenuOper_Morph_Thining_Click);
+            // 
+            // MenuCompression
+            // 
+            this.MenuCompression.Enabled = false;
+            this.MenuCompression.ForeColor = System.Drawing.Color.DarkGray;
+            this.MenuCompression.Name = "MenuCompression";
+            this.MenuCompression.Size = new System.Drawing.Size(107, 24);
+            this.MenuCompression.Text = "Compression";
+            this.MenuCompression.Click += new System.EventHandler(this.MenuCompression_Click);
             // 
             // MenuAbout
             // 
@@ -293,6 +387,23 @@
             this.MenuAbout.Text = "About";
             this.MenuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             // 
+            // projektToolStripMenuItem
+            // 
+            this.projektToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+                | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.projektToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.projektToolStripMenuItem.Name = "projektToolStripMenuItem";
+            this.projektToolStripMenuItem.Size = new System.Drawing.Size(71, 24);
+            this.projektToolStripMenuItem.Text = "Projekt";
+            this.projektToolStripMenuItem.Click += new System.EventHandler(this.projektToolStripMenuItem_Click);
+            // 
+            // MenuOper_Filters_Gradient
+            // 
+            this.MenuOper_Filters_Gradient.Name = "MenuOper_Filters_Gradient";
+            this.MenuOper_Filters_Gradient.Size = new System.Drawing.Size(183, 24);
+            this.MenuOper_Filters_Gradient.Text = "Gradient";
+            this.MenuOper_Filters_Gradient.Click += new System.EventHandler(this.MenuOper_Filters_Gradient_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -302,7 +413,7 @@
             this.Controls.Add(this.MenuBar);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.ForeColor = System.Drawing.Color.Maroon;
+            this.ForeColor = System.Drawing.Color.DarkRed;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.MenuBar;
@@ -351,6 +462,17 @@
         private System.Windows.Forms.ToolStripMenuItem MenuOper_Adj_Brightness;
         private System.Windows.Forms.ToolStripMenuItem MenuOper_Calculation;
         private System.Windows.Forms.ToolStripMenuItem MenuOper_Filters;
+        private System.Windows.Forms.ToolStripMenuItem MenuOper_Filters_Custom;
+        private System.Windows.Forms.ToolStripMenuItem MenuOper_Filters_Median;
+        private System.Windows.Forms.ToolStripMenuItem MenuOper_Morph;
+        private System.Windows.Forms.ToolStripMenuItem MenuOper_Morph_Dilation;
+        private System.Windows.Forms.ToolStripMenuItem MenuOper_Morph_Erosion;
+        private System.Windows.Forms.ToolStripMenuItem MenuOper_Morph_Closing;
+        private System.Windows.Forms.ToolStripMenuItem MenuOper_Morph_Opening;
+        private System.Windows.Forms.ToolStripMenuItem MenuOper_Morph_Thining;
+        private System.Windows.Forms.ToolStripMenuItem MenuCompression;
+        private System.Windows.Forms.ToolStripMenuItem projektToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MenuOper_Filters_Gradient;
 
     }
 }
